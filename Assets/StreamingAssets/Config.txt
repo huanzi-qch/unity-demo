@@ -1,0 +1,10 @@
+{
+    "name":"Unity 3D Demo",
+    "describe":"一个简单的Unity学习项目，封装了一下简单、通用功能组件，项目适用于数据可视化",
+    "author":"huanzi-qch",
+    "blogs":"https://www.cnblogs.com/huanzi-qch",
+    "github":"https://github.com/huanzi-qch",
+    "gitee":"https://gitee.com/huanzi-qch",
+    "QQqun":"1015379123",
+    "serviceUrl":"http://localhost:8080/"
+}
