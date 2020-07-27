@@ -236,7 +236,7 @@ namespace DefaultNamespace
                 //加载播放器对象
                 videoGameObject = GameObject.Instantiate(videoPrefab, content, true);
                 VideoPlayer videoPlayer = videoGameObject.transform.Find("Video Player").gameObject.GetComponent<VideoPlayer>();
-                
+
                 //设置宽高
                 RectTransform rectTransform = videoGameObject.GetComponent<RectTransform>();
                 rectTransform.anchoredPosition3D = Vector3.zero;
@@ -245,12 +245,13 @@ namespace DefaultNamespace
                 
                 try
                 {
+                    //设置视频地址
+                    string url = Application.streamingAssetsPath +"/test.mp4";
+                    Debug.Log("视频播放地址："+url);
+                    videoPlayer.url = url;
+                    
                     videoPlayer.prepareCompleted += (VideoPlayer source) =>
                     {
-                        //设置视频地址 file://C:/Users/Administrator/Videos/test.mp4
-//                    string path = "file://"+Application.streamingAssetsPath + "/text.mp4";
-//                    videoPlayer.url = path;
-
                         //预加载完之后调用我
                         videoPlayer.Play();
                     };
