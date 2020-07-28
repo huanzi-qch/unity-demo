@@ -109,10 +109,10 @@ namespace Common {
 		private void Move()
 		{
 			//鼠标是否放在UI上
-			if (EventSystem.current.IsPointerOverGameObject())
-			{
-				return;
-			}
+//			if (EventSystem.current.IsPointerOverGameObject())
+//			{
+//				return;
+//			}
 			
 			if(Input.GetMouseButtonUp(0) && canMove){
 				time2 = Time.realtimeSinceStartup; 
@@ -170,10 +170,10 @@ namespace Common {
 		/// </summary>
 		private void Zoom() {
 			//鼠标是否放在UI上
-			if (EventSystem.current.IsPointerOverGameObject())
-			{
-				return;
-			}
+//			if (EventSystem.current.IsPointerOverGameObject())
+//			{
+//				return;
+//			}
 			
 			float mouseScrollWheel = Input.GetAxis("Mouse ScrollWheel");
 
@@ -204,10 +204,10 @@ namespace Common {
 		/// </summary>
 		private void Rotate() {
 			//鼠标是否放在UI上
-			if (EventSystem.current.IsPointerOverGameObject())
-			{
-				return;
-			}
+//			if (EventSystem.current.IsPointerOverGameObject())
+//			{
+//				return;
+//			}
 			
 			if(Input.GetMouseButton(0)  && canRotation) {
 				//沿着X轴上下旋转
@@ -246,7 +246,6 @@ namespace Common {
 				angle -= 360F;
 			return Mathf.Clamp(angle, min, max);
 		}
-
 		
 		public Vector3 RotaAxis
 		{

@@ -1,4 +1,5 @@
 using System;
+using Common;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,21 +10,37 @@ namespace DefaultNamespace.Common.Dialog
     /// </summary>
     public class Dialog : MonoBehaviour
     {
-        [Header("滚动框预制体")]
-        public GameObject scrollBoxPrefab;
+        //[Header("滚动框预制体")]
+        private GameObject scrollBoxPrefab;
         private GameObject scrollBoxGameObject;
         
-        [Header("确认框预制体")]
-        public GameObject affirmPrefab;
+        //[Header("确认框预制体")]
+        private GameObject affirmPrefab;
         private GameObject affirmGameObject;
         
-        [Header("警告框预制体")]
-        public GameObject alertPrefab;
+        //[Header("警告框预制体")]
+        private GameObject alertPrefab;
         private GameObject alertGameObject;
         
-        [Header("提示框预制体")]
-        public GameObject msgPrefab;
+        //[Header("提示框预制体")]
+        private GameObject msgPrefab;
         private GameObject msgGameObject;
+        
+        public void Start()
+        {
+            loadPrefabs();
+        }
+
+        /// <summary>
+        /// 动态加载预制体
+        /// </summary>
+        private void loadPrefabs()
+        {
+            scrollBoxPrefab = (GameObject)Resources.Load("Dialog/ScrollBox");
+            affirmPrefab = (GameObject)Resources.Load("Dialog/Affirm");
+            alertPrefab = (GameObject)Resources.Load("Dialog/Alert");
+            msgPrefab = (GameObject)Resources.Load("Dialog/Msg");
+        }
         
         /// <summary>
         /// 滚动框
@@ -38,9 +55,14 @@ namespace DefaultNamespace.Common.Dialog
             
             Transform scrollBox = scrollBoxGameObject.transform.Find("ScrollBox");
             scrollBox.Find("Title").GetComponent<Text>().text = title;
+            
+            CameraMove cameraMove = Camera.main.GetComponent<CameraMove>();
+            cameraMove.enabled = false;//禁用摄像头操作脚本
+            
             scrollBox.Find("Close").GetComponent<Button>().onClick.AddListener(() =>
             {
                 GameObject.Destroy(scrollBoxGameObject);
+                cameraMove.enabled = true;//开放摄像头操作脚本
                 if (closeCallBack != null)
                 {
                     closeCallBack.Invoke();
@@ -64,10 +86,15 @@ namespace DefaultNamespace.Common.Dialog
             Transform affirm = affirmGameObject.transform.Find("Affirm");
             affirm.Find("Title").GetComponent<Text>().text = title;
             affirm.Find("Text").GetComponent<Text>().text = text;
+                        
+            CameraMove cameraMove = Camera.main.GetComponent<CameraMove>();
+            cameraMove.enabled = false;//禁用摄像头操作脚本
+
             Button closeButton = affirm.Find("Close").GetComponent<Button>();
             closeButton.onClick.AddListener(() =>
             {
                 GameObject.Destroy(affirmGameObject);
+                cameraMove.enabled = true;//开放摄像头操作脚本
                 if (closeCallBack != null)
                 {
                     closeCallBack.Invoke();
@@ -99,9 +126,14 @@ namespace DefaultNamespace.Common.Dialog
             Transform alert = alertGameObject.transform.Find("Alert");
             alert.Find("Title").GetComponent<Text>().text = title;
             alert.Find("Text").GetComponent<Text>().text = text;
+                        
+            CameraMove cameraMove = Camera.main.GetComponent<CameraMove>();
+            cameraMove.enabled = false;//禁用摄像头操作脚本
+
             alert.Find("Close").GetComponent<Button>().onClick.AddListener(() =>
             {
                 GameObject.Destroy(alertGameObject);
+                cameraMove.enabled = true;//开放摄像头操作脚本
                 if (closeCallBack != null)
                 {
                     closeCallBack.Invoke();
