@@ -143,9 +143,9 @@ namespace DefaultNamespace.Common.Dialog
         }
         
         /// <summary>
-        /// 提示框，2秒后自动删除
+        /// 提示框，time 秒后自动删除
         /// </summary>
-        public void msg(String text)
+        public void msg(String text ,float time = 2f)
         {
             if (msgGameObject != null)
             {
@@ -155,7 +155,7 @@ namespace DefaultNamespace.Common.Dialog
             msgGameObject.GetComponent<RectTransform>().anchoredPosition3D = Vector3.zero;
             msgGameObject.transform.Find("Text").GetComponent<Text>().text = text;
             
-            Invoke("Timer", 2f);
+            Invoke("Timer", time);
         }
 
         //提示框定时器任务

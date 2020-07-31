@@ -16,7 +16,7 @@
 国内：https://gitee.com/huanzi-qch/unity-demo<br/> 
 
 ## 运行效果图<br/> 
-![](https://img2020.cnblogs.com/blog/1353055/202007/1353055-20200715162126514-1005668248.png) 
+![](https://img2020.cnblogs.com/blog/1353055/202007/1353055-20200731120020411-476599884.png) 
 
 ## 前往博客查看详情<br/> 
 具体介绍请看我的博客[《Unity3D Demo项目开发记录》](https://www.cnblogs.com/huanzi-qch/p/13307080.html)<br/> 
