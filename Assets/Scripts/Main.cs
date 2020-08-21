@@ -8,6 +8,7 @@ using DG.Tweening;
 using Script.Common;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Video;
 
@@ -37,13 +38,18 @@ namespace DefaultNamespace
             
             findCube = transform.Find("Cube");
             
+            //http请求获取config配置
             Config.InitConfig((configVo) =>
             {
-                UiAnimation(configVo);
+                //场景过渡，开幕动画
+                UIRoot.transform.Find("Curtain").GetComponent<Curtain>().OpenCurtain(() =>
+                {
+                    UiAnimation(configVo);
             
-                EvenInit();
+                    EvenInit();
 
-                InitLine();
+                    InitLine();
+                });
             });
         }
 
@@ -265,6 +271,16 @@ namespace DefaultNamespace
                     //当视频播放出错时的回调
                     Debug.Log("播放异常" + e);   
                 }
+            });     
+                               
+            //按钮8，切换场景
+            buttonGroup.Find("Button8").GetComponent<Button>().onClick.AddListener(() =>
+            {
+                //场景过渡，闭幕动画
+                UIRoot.transform.Find("Curtain").GetComponent<Curtain>().CloseCurtain(() =>
+                {
+                    SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
+                });
             });
         }
 
