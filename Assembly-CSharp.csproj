@@ -1649,8 +1649,13 @@
     <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModuleUnityVersion.cs" />
     <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModuleUtils.cs" />
     <Compile Include="Assets\Scripts\Billboard\Billboard.cs" />
+    <Compile Include="Assets\Scripts\Billboard\Position3DTo2D.cs" />
+    <Compile Include="Assets\Scripts\Common\Button\HuanziButton.cs" />
+    <Compile Include="Assets\Scripts\Common\Camera\CameraEnableByMouseHovering.cs" />
     <Compile Include="Assets\Scripts\Common\Camera\CameraMove.cs" />
+    <Compile Include="Assets\Scripts\Common\Camera\IsPointerOverUI.cs" />
     <Compile Include="Assets\Scripts\Common\Click\Click.cs" />
+    <Compile Include="Assets\Scripts\Common\Curtain\Curtain.cs" />
     <Compile Include="Assets\Scripts\Common\Http\Config.cs" />
     <Compile Include="Assets\Scripts\Common\Http\ConfigVo.cs" />
     <Compile Include="Assets\Scripts\Common\Random\Random.cs" />

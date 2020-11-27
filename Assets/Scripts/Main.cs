@@ -281,6 +281,12 @@ namespace DefaultNamespace
                 {
                     SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
                 });
+            });        
+            
+            //按钮9，定点焦聚
+            buttonGroup.Find("Button9").GetComponent<Button>().onClick.AddListener(() =>
+            {
+                Camera.main.GetComponent<CameraMove>().CamerafocusByPoint(GameObject.Find("Rack").transform.position,2F,5F,null);
             });
         }
 

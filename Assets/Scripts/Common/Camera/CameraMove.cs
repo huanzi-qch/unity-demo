@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using DefaultNamespace;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
@@ -108,11 +109,10 @@ namespace Common {
 		/// </summary>
 		private void Move()
 		{
-			//鼠标是否放在UI上
-//			if (EventSystem.current.IsPointerOverGameObject())
-//			{
-//				return;
-//			}
+			if (IsEnable())
+			{
+				return;
+			}
 			
 			if(Input.GetMouseButtonUp(0) && canMove){
 				time2 = Time.realtimeSinceStartup; 
@@ -169,11 +169,10 @@ namespace Common {
 		/// 鼠标滚轮缩放场景效果
 		/// </summary>
 		private void Zoom() {
-			//鼠标是否放在UI上
-//			if (EventSystem.current.IsPointerOverGameObject())
-//			{
-//				return;
-//			}
+			if (IsEnable())
+			{
+				return;
+			}
 			
 			float mouseScrollWheel = Input.GetAxis("Mouse ScrollWheel");
 
@@ -203,11 +202,10 @@ namespace Common {
 		/// 鼠标左键旋转场景效果
 		/// </summary>
 		private void Rotate() {
-			//鼠标是否放在UI上
-//			if (EventSystem.current.IsPointerOverGameObject())
-//			{
-//				return;
-//			}
+			if (IsEnable())
+			{
+				return;
+			}
 			
 			if(Input.GetMouseButton(0)  && canRotation) {
 				//沿着X轴上下旋转
@@ -348,6 +346,76 @@ namespace Common {
 					}
 				});
 			});
+		}
+		
+				
+		/// <summary>
+		/// 封装镜头聚焦，传入一个坐标，镜头聚焦过去
+		/// </summary>
+		/// <param name="point">聚焦坐标</param>
+		/// <param name="duration">焦聚动画时长</param>
+		/// <param name="distance">镜头推荐距离</param>
+		/// <param name="callback">聚焦结束回调</param>
+		public void CamerafocusByPoint(Vector3 point,float duration,float distance,Action callback)
+		{
+			canMove = false;
+			canRotation = false;
+			canZoom = false;
+			
+			distance = Vector3.Distance(this.transform.position, point) - distance;
+
+			
+			//获取摄像头移动的目标坐标
+			moveTargetPoint = GetBetweenPointByDist(transform.position, point, distance);
+			
+			//把摄像朝向目标点
+			this.transform.DOLookAt(point, duration).OnComplete(() =>
+			{
+				currentAngleForX = this.transform.eulerAngles.x;
+
+				if (callback != null)
+				{
+					callback.Invoke();
+				}
+			});
+			
+			//重设旋转轴心点
+			rotaAxis = new Vector3(point.x, 0, point.z);
+
+			float dist = Vector3.Distance(this.transform.position, moveTargetPoint);
+			Vector3 move = Vector3.Lerp(this.transform.position, moveTargetPoint, Time.deltaTime * 5);
+			this.transform.position = dist > 0.01f ? move : moveTargetPoint;
+			
+			if (Vector3.Distance(this.transform.position, moveTargetPoint) == 0)
+			{
+				moveTargetPoint = Vector3.zero;
+				canMove = true;
+				canRotation = true;
+				canZoom = true;
+			}
+			
+		}
+
+		/// <summary>
+		/// 是否停用鼠标操作镜头
+		/// </summary>
+		private bool IsEnable()
+		{
+			//鼠标是否放在UI上
+			IsPointerOverUI ip = new IsPointerOverUI ();
+			if (ip.IsPointerOverUIObject()) {
+				
+				for (var i = 0; i < ip.results.Count; i++)
+				{
+					//该UI对象是否有绑定我们在CameraEnableByMouseHovering脚本
+					CameraEnableByMouseHovering cameraEnableByMouseHovering = ip.results[i].gameObject.GetComponent<CameraEnableByMouseHovering>();
+					if (cameraEnableByMouseHovering != null)
+					{
+						return true;
+					}
+				}
+			}
+			return false;
 		}
 	}
 }
